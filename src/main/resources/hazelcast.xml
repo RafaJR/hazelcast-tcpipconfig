@@ -1,0 +1,35 @@
+<hazelcast xsi:schemaLocation="http://www.hazelcast.com/schema/config http://www.hazelcast.com/schema/config/hazelcast-config-3.8.xsd"
+	xmlns="http://www.hazelcast.com/schema/config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">	
+
+	<network>
+		<join>
+			<multicast enabled="false"></multicast>
+			<tcp-ip enabled="true">
+				<required-member>192.168.80.1</required-member>
+				<members>192.168.80.1-200</members>         
+			</tcp-ip>
+		</join>
+	</network>
+	
+<!-- 	<member-attributes> -->
+<!-- 		<attribute name="hazelcast.partition.group.zone">zone name</attribute> -->
+<!-- 		<attribute name="hazelcast.partition.group.rack">rack name</attribute> -->
+<!-- 		<attribute name="hazelcast.partition.group.host">host name</attribute> -->
+<!-- 	</member-attributes> -->
+
+	<properties>
+		
+		<!-- Hazelcast realiza 271 particiones por defecto y las distribuye entre sus miembros.
+		En este caso solo se van a realizar 20 particiones. -->
+		<property name="hazelcast.map.partition.count">20</property>
+	</properties>
+	
+	<map name="dataMap">
+	   <time-to-live-seconds>10</time-to-live-seconds>
+	   <attributes>
+            <attribute extractor="com.bank.CurrencyExtractor">currency</attribute>
+		</attributes>		
+	</map>
+
+</hazelcast>
